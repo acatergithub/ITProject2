@@ -4,6 +4,7 @@ import random
 import socket
 import sys
 import select
+import time
 
 def ls():
 #borrowed code from ts.py need to change.
@@ -42,7 +43,9 @@ def ls():
         inputs = [ts1,ts2]
         outputs = [ts1,ts2]
         info = ""
-        while inputs and info == "":
+        start = time.time()
+        #Loop for checking non blocking recv calls. Will end when data is recieved, inputs empties, or 5 seconds have passed.
+        while inputs and info == "" and (start - time.time()) < 5:
             readable,writeable,errors = select.select(inputs,outputs,inputs,0.5)
             for i in writeable:
                 print("Sending, ", data)
