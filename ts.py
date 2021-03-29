@@ -13,7 +13,7 @@ def ts():
         print('socket open error: {}\n'.format(err))
         exit()
 
-    with open("PROJI-DNSTS.txt") as DNS:
+    with open("PROJ2-DNSTS1.txt") as DNS:
         DNSList = [line.rstrip('\n').split(" ", 1) for line in DNS]  # Reads from the file
 
     print(DNSList)

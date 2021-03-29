@@ -49,10 +49,10 @@ def client_driver():
     print(rs_port)
 
     # open input folder and store lines in sites list
-    with open('PROJI-HNS.txt') as f:
+    with open('PROJ2-HNS.txt') as f:
         sites = f.readlines()
 
-    outF = open("RESOLVED1.txt", "w")
+    outF = open("RESOLVED2.txt", "w")
 
     #List of thruples to store responses
     responses = list()

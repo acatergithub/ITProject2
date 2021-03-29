@@ -12,24 +12,24 @@ def ls():
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         print("[S]: Client/Server socket created")
         ts1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        ts1.setblocking(False)
         print("[S]: Server/ts1 socket created")
         ts2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        ts2.setblocking(False)
         print("[S]: Server/ts2 socket created")
 
     except socket.error as err:
         print('socket open error: {}\n'.format(err))
         exit()
 
-    server_binding = (sys.argv[1], int(sys.argv[2]))
+    server_binding = ('', int(sys.argv[1]))
     print(sys.argv[1])
     client.bind(server_binding)
     client.listen(5)
-    server_binding = (sys.argv[3], int(sys.argv[4]))
+    server_binding = (sys.argv[2], int(sys.argv[3]))
     ts1.connect(server_binding)
-    server_binding = (sys.argv[5], int(sys.argv[6]))
+    server_binding = (sys.argv[4], int(sys.argv[5]))
     ts2.connect(server_binding)
+    ts1.setblocking(False)
+    ts2.setblocking(False)
 
     while (True):
         (csockid, addr) = client.accept()
