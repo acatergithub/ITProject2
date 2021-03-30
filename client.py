@@ -26,8 +26,6 @@ def client(request, port, host ):
     response = cs.recv(100).decode('utf-8')
 
     #if the request is not found, return ERROR
-    if response == "- Error:HOST NOT FOUND":
-        return response
 
     #print("[C]: Data received from server: {}".format(data_from_server))
 

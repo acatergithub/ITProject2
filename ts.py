@@ -19,7 +19,7 @@ def ts():
     print(DNSList)
 
     serverList = {}
-    for i in range(len(DNSList) - 1):
+    for i in range(len(DNSList)):
         serverList[DNSList[i][0]] = []  # Creates the dictionary severList from the DNS 2d array
         serverList[DNSList[i][0]].append(DNSList[i][1])
         print(serverList[DNSList[i][0]])
@@ -28,9 +28,8 @@ def ts():
     print(sys.argv[1])
     ts.bind(server_binding)
     ts.listen(5)
-
+    (csockid, addr) = ts.accept()
     while (True):
-        (csockid, addr) = ts.accept()
         print("[S]: Got a connection request from a client at {}".format(addr))
 
         data = csockid.recv(1000)

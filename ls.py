@@ -47,20 +47,18 @@ def ls():
         end = False
         #Loop for checking non blocking recv calls. Will end when data is recieved, inputs empties, or 5 seconds have passed.
         while inputs and info == "":
-            print("how often does it get here?")
             readable, writeable, exceptional = select.select(inputs,outputs,inputs,0.5)
-            print(len(readable))
             for i in writeable:
                 print("Sending, ", data)
                 i.send(data.encode("UTF-8","strict"))
                 outputs.remove(i)
-            print(len(readable))
             for i in readable:
                 print("Checking!")
                 info = i.recv(1024)
                 print("Data Recieved!")
                 inputs.remove(i)
                 csockid.send(info)
+                start = time.time()
                 break
 
             for i in exceptional:
