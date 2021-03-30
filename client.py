@@ -10,10 +10,10 @@ def client(request, port, host ):
         exit()
 
     #define the ts_port as the 4th arg
-    ts_port = int(sys.argv[3])
+    ls_port = int(sys.argv[2])
 
     # get address of the host
-    addr = socket.gethostbyname(host)
+    addr = sys.argv[1]
 
     # connect to the server using its address
     server_binding = (addr, port)
@@ -34,8 +34,7 @@ def client(request, port, host ):
     data_from_server = response.split()
 
     #if the rs server respons with "localhost - NS" call client again on the
-    if data_from_server[-1] == "NS":
-        response = client( request, ts_port, data_from_server[0])
+
 
     # close the client socket
     cs.close()

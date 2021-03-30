@@ -44,24 +44,38 @@ def ls():
         outputs = [ts1,ts2]
         info = ""
         start = time.time()
+        end = False
         #Loop for checking non blocking recv calls. Will end when data is recieved, inputs empties, or 5 seconds have passed.
-        while inputs and info == "" and (start - time.time()) < 5:
-            readable,writeable,errors = select.select(inputs,outputs,inputs,0.5)
+        while inputs and info == "":
+            print("how often does it get here?")
+            readable, writeable, exceptional = select.select(inputs,outputs,inputs,0.5)
+            print(len(readable))
             for i in writeable:
                 print("Sending, ", data)
                 i.send(data.encode("UTF-8","strict"))
                 outputs.remove(i)
+            print(len(readable))
             for i in readable:
+                print("Checking!")
                 info = i.recv(1024)
+                print("Data Recieved!")
                 inputs.remove(i)
-                client.send(info)
+                csockid.send(info)
                 break
-            for i in errors:
+
+            for i in exceptional:
                 print("ERROR")
                 inputs.remove(i)
                 outputs.remove(i)
                 break
-
+            if (time.time() - start) >= 5:
+                end = True
+                break
+        print("Left loop")
+        if end:
+            print("NO HOST")
+            ret = "- Error:HOST NOT FOUND"
+            csockid.send(ret.encode("UTF-8","strict"))
 
     # Close the server socket
 
